@@ -53,6 +53,10 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	// 描画関係初期化関数(任意のShaderの読み込みもできる)
 	tex.Initialize();
 
+	Texture2D tex2 = tex;
+
+	
+
 	/// 
 	/// メインループ
 	/// 
@@ -88,7 +92,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 		camera.Update();
 
+		tex.Debug("tex");
+		tex2.Debug("tex2");
+
 		tex.Update();
+		tex2.Update();
 
 		///
 		/// 更新処理ここまで
@@ -100,6 +108,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		
 		// カメラ行列を渡す(描画の設定もここで変えれる)
 		tex.Draw(camera.GetViewOthographics(), Pipeline::Normal);
+		tex2.Draw(camera.GetViewOthographics(), Pipeline::Normal);
+
+
 
 		///
 		/// 描画処理ここまで

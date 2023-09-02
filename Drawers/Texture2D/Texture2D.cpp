@@ -25,44 +25,12 @@ Texture2D::Texture2D() :
 {}
 
 Texture2D::Texture2D(const Texture2D& right) :
-	scale(Vector2::identity),
-	rotate(),
-	pos({ 0.0f,0.0f,0.01f }),
-	uvPibot(),
-	uvSize(Vector2::identity),
-	SRVHeap(16),
-	SRVHandle{},
-	vertexView(),
-	vertexResource(nullptr),
-	indexView(),
-	indexResource(nullptr),
-	shader(),
-	graphicsPipelineState(),
-	tex(nullptr),
-	isFirstLoad(true),
-	isLoad(false),
-	color(std::numeric_limits<uint32_t>::max())
+	Texture2D()
 {
 	*this = right;
 }
 Texture2D::Texture2D(Texture2D&& right) noexcept :
-	scale(Vector2::identity),
-	rotate(),
-	pos({ 0.0f,0.0f,0.01f }),
-	uvPibot(),
-	uvSize(Vector2::identity),
-	SRVHeap(16),
-	SRVHandle{},
-	vertexView(),
-	vertexResource(nullptr),
-	indexView(),
-	indexResource(nullptr),
-	shader(),
-	graphicsPipelineState(),
-	tex(nullptr),
-	isFirstLoad(true),
-	isLoad(false),
-	color(std::numeric_limits<uint32_t>::max())
+	Texture2D()
 {
 	*this = right;
 }
@@ -80,19 +48,20 @@ Texture2D& Texture2D::operator=(const Texture2D& right) {
 	uvPibot = right.uvPibot;
 	uvSize = right.uvSize;
 
+	color = right.color;
+
 	worldPos = right.worldPos;
 
 	SRVHeap.Reset();
 
-	tex = nullptr;
+	tex = right.tex;
 
-	if (right.isLoad) {
-		ThreadLoadTexture(right.tex->GetFileName());
-		Initialize();
-	}
+	shader = right.shader;
 
 	*wvpMat = *right.wvpMat;
 	*colorBuf = *right.colorBuf;
+
+	Initialize();
 
 	return *this;
 }
