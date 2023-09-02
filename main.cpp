@@ -37,7 +37,21 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	Engine::LoadFont("./Resources/Font/fonttest.spritefont");
 
 	bool fullscreen = false;
+
+	// カメラ
+	Camera camera{ Camera::Mode::Othographic };
 	
+	// インスタンス
+	Texture2D tex;
+
+	// 通常読み込み(この関数が終わるまで進まない)
+	tex.LoadTexture("./Resources/uvChecker.png");
+
+	// こちらを使うと非同期に読み込みができる(読み込みが終わると描画される)
+	//tex.ThreadLoadTexture("./Resource/uvChecker.png");
+
+	// 描画関係初期化関数(任意のShaderの読み込みもできる)
+	tex.Initialize();
 
 	/// 
 	/// メインループ
@@ -72,6 +86,10 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 			WinApp::GetInstance()->SetFullscreen(fullscreen);
 		}
 
+		camera.Update();
+
+		tex.Update();
+
 		///
 		/// 更新処理ここまで
 		/// 
@@ -79,6 +97,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		///
 		/// 描画処理
 		/// 
+		
+		// カメラ行列を渡す(描画の設定もここで変えれる)
+		tex.Draw(camera.GetViewOthographics(), Pipeline::Normal);
 
 		///
 		/// 描画処理ここまで

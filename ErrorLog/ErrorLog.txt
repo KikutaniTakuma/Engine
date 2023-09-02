@@ -62,3 +62,14 @@
 
 2023/09/02 10:38:32 JST : ErrorCheck Start
 2023/09/02 10:38:35 JST : ErrorCheck End
+
+2023/09/02 10:56:30 JST : ErrorCheck Start
+2023/09/02 10:56:30 : Texture / LoadTexture() : Failed : This file is not exist -> ./Resource/uvChecker.png
+2023/09/02 10:56:31 JST : There was Error!!!!
+
+2023/09/02 10:56:54 JST : ErrorCheck Start
+2023/09/02 10:56:54 : Texture / LoadTexture() : Failed : This file is not exist -> ./Resource/uvChecker.png
+2023/09/02 10:56:56 JST : There was Error!!!!
+
+2023/09/02 10:57:05 JST : ErrorCheck Start
+2023/09/02 10:57:07 JST : ErrorCheck End
