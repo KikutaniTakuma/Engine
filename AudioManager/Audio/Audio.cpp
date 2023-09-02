@@ -58,9 +58,13 @@ void Audio::Load(const std::string& fileName, bool loopFlg_) {
 		file.read((char*)&data, sizeof(data));
 	}
 
-	if (strncmp(data.id.data(), "data", 4) != 0) {
-		ErrorCheck::GetInstance()->ErrorTextBox("Load() : Not found data", "Audio");
-		return;
+	while (strncmp(data.id.data(), "data", 4) != 0) {
+		file.seekg(data.size, std::ios_base::cur);
+		file.read((char*)&data, sizeof(data));
+		if (file.eof()) {
+			ErrorCheck::GetInstance()->ErrorTextBox("Load() : Not found data", "Audio");
+			return;
+		}
 	}
 
 	char* pBufferLocal = new char[data.size];

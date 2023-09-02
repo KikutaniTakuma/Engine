@@ -28,11 +28,11 @@ private:
 	static AudioManager* instance;
 
 public:
-	std::shared_ptr<class Audio> LoadWav(const std::string& fileName, bool flg);
+	class Audio* LoadWav(const std::string& fileName, bool loopFlg);
 
 private:
 	Microsoft::WRL::ComPtr<IXAudio2> xAudio2;
 	IXAudio2MasteringVoice* masterVoice;
 
-	std::unordered_map<std::string, std::shared_ptr<class Audio>> audios;
+	std::unordered_map<std::string, std::unique_ptr<class Audio>> audios;
 };

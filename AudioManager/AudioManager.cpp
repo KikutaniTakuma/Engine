@@ -34,10 +34,10 @@ AudioManager::~AudioManager() {
 	xAudio2.Reset();
 }
 
-std::shared_ptr<class Audio> AudioManager::LoadWav(const std::string& fileName, bool flg) {
+Audio* AudioManager::LoadWav(const std::string& fileName, bool loopFlg) {
 	if (audios.empty()) {
 		auto audio = std::make_unique<Audio>();
-		audio->Load(fileName, flg);
+		audio->Load(fileName, loopFlg);
 		audios.insert({ fileName, std::move(audio) });
 	}
 	else {
@@ -45,10 +45,10 @@ std::shared_ptr<class Audio> AudioManager::LoadWav(const std::string& fileName, 
 
 		if (itr == audios.end()) {
 			auto audio = std::make_unique<Audio>();
-			audio->Load(fileName, flg);
+			audio->Load(fileName, loopFlg);
 			audios.insert({ fileName, std::move(audio) });
 		}
 	}
 
-	return audios[fileName];
+	return audios[fileName].get();
 }
