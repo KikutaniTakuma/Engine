@@ -65,7 +65,7 @@ public:
 		Pipeline::Blend blend_,
 		Pipeline::SolidState solidState_,
 		Pipeline::CullMode cullMode_ = Pipeline::CullMode::Back,
-		bool isLine_ = false,
+		D3D12_PRIMITIVE_TOPOLOGY_TYPE topologyType_ = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE,
 		uint32_t numRenderTarget_ = 1u
 	);
 
@@ -101,7 +101,7 @@ private:
 	Pipeline::Blend blend;
 	Pipeline::CullMode cullMode;
 	Pipeline::SolidState solidState;
-	bool isLine;
+	D3D12_PRIMITIVE_TOPOLOGY_TYPE topologyType;
 	uint32_t numRenderTarget;
 	bool isDepth;
 

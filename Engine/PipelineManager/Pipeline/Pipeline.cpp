@@ -12,7 +12,7 @@ Pipeline::Pipeline():
 	solidState(),
 	numRenderTarget(1u),
 	semanticNames(0),
-	isLine(false),
+	topologyType(D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE),
 	rootSignature(nullptr),
 	isDepth(true)
 {
@@ -69,7 +69,7 @@ void Pipeline::Create(
 	Pipeline::Blend blend_,
 	Pipeline::CullMode cullMode_,
 	Pipeline::SolidState solidState_,
-	bool isLine_,
+	D3D12_PRIMITIVE_TOPOLOGY_TYPE topologyType_,
 	uint32_t numRenderTarget_,
 	bool isDepth_
 ) {
@@ -77,7 +77,7 @@ void Pipeline::Create(
 	cullMode = cullMode_;
 	solidState = solidState_;
 	numRenderTarget = numRenderTarget_;
-	isLine = isLine_;
+	topologyType = topologyType_;
 	isDepth = isDepth_;
 
 	rootSignature = rootSignature_.Get();
@@ -144,15 +144,8 @@ void Pipeline::Create(
 	graphicsPipelineStateDesc.NumRenderTargets = numRenderTarget;
 	graphicsPipelineStateDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	// 利用するトポロジ(形状)のタイプ
-	if (!isLine && shader.hull && shader.domain) {
-		graphicsPipelineStateDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_PATCH;
-	}
-	else if (isLine) {
-		graphicsPipelineStateDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE;
-	}
-	else {
-		graphicsPipelineStateDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-	}
+	graphicsPipelineStateDesc.PrimitiveTopologyType = topologyType;
+
 	// どのように画面に打ち込むかの設定
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleDesc.Quality = 0;
@@ -223,14 +216,23 @@ void Pipeline::Use() {
 	auto commandlist = Engine::GetCommandList();
 	commandlist->SetGraphicsRootSignature(rootSignature);
 	commandlist->SetPipelineState(graphicsPipelineState.Get());
-	if (!isLine && shader.hull && shader.domain) {
-		commandlist->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_3_CONTROL_POINT_PATCHLIST);
-	}
-	else if (isLine) {
+
+	switch (topologyType)
+	{
+	case D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE:
 		commandlist->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
-	}
-	else {
+		break;
+	case D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE:
 		commandlist->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		break;
+	case D3D12_PRIMITIVE_TOPOLOGY_TYPE_PATCH:
+		commandlist->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_3_CONTROL_POINT_PATCHLIST);
+		break;
+	default:
+	case D3D12_PRIMITIVE_TOPOLOGY_TYPE_UNDEFINED:
+	case D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT:
+		ErrorCheck::GetInstance()->ErrorTextBox("Pipline::Use() failed : Cannot use this primitive topology type","Pipline");
+		break;
 	}
 }
 
@@ -239,7 +241,7 @@ bool Pipeline::IsSame(
 	Pipeline::Blend blend_,
 	Pipeline::CullMode cullMode_,
 	Pipeline::SolidState solidState_,
-	bool isLine_,
+	D3D12_PRIMITIVE_TOPOLOGY_TYPE topologyType_,
 	uint32_t numRenderTarget_,
 	ID3D12RootSignature* rootSignature_,
 	bool isDepth_
@@ -252,7 +254,7 @@ bool Pipeline::IsSame(
 		&& blend == blend_
 		&& cullMode == cullMode_
 		&& solidState == solidState_
-		&& isLine == isLine_
+		&& topologyType == topologyType_
 		&& numRenderTarget == numRenderTarget_
 		&& rootSignature == rootSignature_
 		&& isDepth == isDepth_;

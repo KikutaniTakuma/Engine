@@ -70,7 +70,7 @@ public:
 		Pipeline::Blend blend_,
 		Pipeline::CullMode cullMode_,
 		Pipeline::SolidState solidState_,
-		bool isLine_,
+		D3D12_PRIMITIVE_TOPOLOGY_TYPE topologyType_,
 		uint32_t numRenderTarget_ = 1,
 		bool isDepth_ = true
 	);
@@ -82,7 +82,7 @@ public:
 		Pipeline::Blend blend_,
 		Pipeline::CullMode cullMode_,
 		Pipeline::SolidState solidState_,
-		bool isLine_,
+		D3D12_PRIMITIVE_TOPOLOGY_TYPE topologyType_,
 		uint32_t numRenderTarget_,
 		ID3D12RootSignature* rootSignature_,
 		bool isDepth_
@@ -103,7 +103,7 @@ private:
 	Pipeline::CullMode cullMode;
 	Pipeline::SolidState solidState;
 	uint32_t numRenderTarget;
-	bool isLine;
+	D3D12_PRIMITIVE_TOPOLOGY_TYPE topologyType;
 	bool isDepth;
 
 	ID3D12RootSignature* rootSignature;
