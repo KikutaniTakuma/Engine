@@ -1,0 +1,25 @@
+
+2023/09/02 08:48:03 JST : ErrorCheck Start
+2023/09/02 08:48:03 : Texture / LoadTexture() : DirectX::LoadFromWICFile() failed
+
+2023/09/02 08:48:53 JST : ErrorCheck Start
+2023/09/02 08:48:53 : Texture / LoadTexture() : DirectX::LoadFromWICFile() failed
+
+2023/09/02 08:53:50 JST : ErrorCheck Start
+2023/09/02 08:53:50 : Texture / LoadTexture() : DirectX::LoadFromWICFile() failed
+2023/09/02 08:53:57 JST : There was Error!!!!
+
+2023/09/02 08:58:03 JST : ErrorCheck Start
+2023/09/02 08:58:03 : Texture / LoadTexture() : DirectX::LoadFromWICFile() failed
+2023/09/02 08:58:05 : Engine / Engine::LoadFont() Failed : this File is not exist -> ./Resources/Font/fonttest.spritefon
+2023/09/02 08:58:07 JST : There was Error!!!!
+
+2023/09/02 09:05:01 JST : ErrorCheck Start
+2023/09/02 09:05:01 : Texture / LoadTexture() : Failed : This file is not exist -> ./Resources/white2x2.png
+2023/09/02 09:05:08 JST : There was Error!!!!
+
+2023/09/02 09:05:28 JST : ErrorCheck Start
+2023/09/02 09:05:35 JST : ErrorCheck End
+
+2023/09/02 09:13:14 JST : ErrorCheck Start
+2023/09/02 09:13:17 JST : ErrorCheck End
