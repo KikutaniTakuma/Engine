@@ -54,14 +54,14 @@ Texture2D& Texture2D::operator=(const Texture2D& right) {
 
 	SRVHeap.Reset();
 
+	Initialize();
+
 	tex = right.tex;
 
 	shader = right.shader;
 
 	*wvpMat = *right.wvpMat;
 	*colorBuf = *right.colorBuf;
-
-	Initialize();
 
 	return *this;
 }
