@@ -6,14 +6,14 @@
 
 class Camera {
 public:
-	enum class Mode : uint8_t {
+	enum class Type : uint8_t {
 		Projecction,
 		Othographic
 	};
 
 public:
 	Camera() noexcept;
-	Camera(Camera::Mode mode) noexcept;
+	Camera(Camera::Type mode) noexcept;
 	Camera(const Camera& right) noexcept;
 	Camera(Camera&& right) noexcept;
 	~Camera() noexcept = default;
@@ -49,7 +49,7 @@ public:
 	}
 
 public:
-	Mode mode;
+	Type type;
 	bool isDebug;
 
 public:

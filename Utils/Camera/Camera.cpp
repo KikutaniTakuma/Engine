@@ -9,7 +9,7 @@
 #include <cmath>
 
 Camera::Camera() noexcept :
-	mode(Mode::Projecction),
+	type(Type::Projecction),
 	isDebug(false),
 	pos(),
 	scale(Vector3::identity),
@@ -27,8 +27,8 @@ Camera::Camera() noexcept :
 	othograohics()
 {}
 
-Camera::Camera(Camera::Mode mode) noexcept :
-	mode(mode),
+Camera::Camera(Camera::Type mode) noexcept :
+	type(mode),
 	isDebug(false),
 	pos(),
 	scale(Vector3::identity),
@@ -60,9 +60,9 @@ void Camera::Update(const Vector3& gazePoint) {
 	if (isDebug) {
 		moveVec = Vector3();
 
-		switch (mode)
+		switch (type)
 		{
-		case Camera::Mode::Projecction:
+		case Camera::Type::Projecction:
 		default:
 			moveSpd = 1.65f;
 			if (Mouse::LongPush(Mouse::Button::Right) && (KeyInput::LongPush(DIK_LSHIFT) || KeyInput::LongPush(DIK_RSHIFT))) {
@@ -90,7 +90,7 @@ void Camera::Update(const Vector3& gazePoint) {
 				pos += moveVec;
 			}
 			break;
-		case Camera::Mode::Othographic:
+		case Camera::Type::Othographic:
 			moveSpd = 15.0f;
 
 			if (Mouse::LongPush(Mouse::Button::Middle)) {
@@ -130,9 +130,9 @@ void Camera::Update(const Vector3& gazePoint) {
 
 	const auto&& windowSize = WinApp::GetInstance()->GetWindowSize();
 
-	switch (mode)
+	switch (type)
 	{
-	case Camera::Mode::Projecction:
+	case Camera::Type::Projecction:
 	default:
 		fov = std::clamp(fov, 0.0f, 1.0f);
 		projection.VertPerspectiveFov(fov, aspect, kNearClip, farClip);
@@ -141,7 +141,7 @@ void Camera::Update(const Vector3& gazePoint) {
 		viewProjecctionVp = VertMakeMatrixViewPort(0.0f, 0.0f, windowSize.x, windowSize.y, 0.0f, 1.0f) * viewProjecction;
 		break;
 
-	case Camera::Mode::Othographic:
+	case Camera::Type::Othographic:
 		othograohics.VertOrthographic(
 			-static_cast<float>(engine->clientWidth) * 0.5f * drawScale,
 			static_cast<float>(engine->clientHeight) * 0.5f * drawScale,
@@ -167,9 +167,9 @@ void Camera::Update(const Mat4x4& worldMat) {
 
 	const auto&& windowSize = WinApp::GetInstance()->GetWindowSize();
 
-	switch (mode)
+	switch (type)
 	{
-	case Camera::Mode::Projecction:
+	case Camera::Type::Projecction:
 	default:
 		fov = std::clamp(fov, 0.0f, 1.0f);
 		projection.VertPerspectiveFov(fov, aspect, kNearClip, farClip);
@@ -178,7 +178,7 @@ void Camera::Update(const Mat4x4& worldMat) {
 		viewProjecctionVp = VertMakeMatrixViewPort(0.0f, 0.0f, windowSize.x, windowSize.y, 0.0f, 1.0f) * viewProjecction;
 		break;
 
-	case Camera::Mode::Othographic:
+	case Camera::Type::Othographic:
 		othograohics.VertOrthographic(
 			-static_cast<float>(engine->clientWidth) * 0.5f * drawScale,
 			static_cast<float>(engine->clientHeight) * 0.5f * drawScale,

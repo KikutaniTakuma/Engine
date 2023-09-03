@@ -17,10 +17,13 @@
 #include "Drawers/Model/Model.h"
 #include "Drawers/Line/Line.h"
 #include "Drawers/Texture2D/Texture2D.h"
+#include "Drawers/StringOut/StringOut.h"
 
 #include "AudioManager/AudioManager.h"
 
 #include "Utils/Camera/Camera.h"
+
+#include "Utils/UIeditor/UIeditor.h"
 
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
@@ -37,6 +40,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	Engine::LoadFont("./Resources/Font/fonttest.spritefont");
 
 	bool fullscreen = false;
+
+	Camera camera{ Camera::Type::Projecction };
+
 	
 
 	/// 
@@ -79,7 +85,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		///
 		/// 描画処理
 		/// 
-		
+
 		///
 		/// 描画処理ここまで
 		/// 
